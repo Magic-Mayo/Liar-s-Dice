@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
 
 const rollDice = () => {
 
@@ -15,9 +14,6 @@ const Game = () => {
 
     return (
         <>
-            <Link to='/'>
-                <button>Main Menu</button>
-            </Link>
             {gameStart ?
                 <button type='button' className='roll-dice' onClick={rollDice}>Roll the dice!</button>
                 :
