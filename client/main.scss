@@ -5,11 +5,17 @@
 
 @import '../imports/styles/utils.scss';
 @import '../imports/ui/Dice/Dice.scss';
+@import '../imports/ui/Game/Game.scss';
 @import '../imports/ui/Header/Header.scss';
+@import '../imports/ui/Settings/Settings.scss';
 
 body {
     background-color: $blueSky;
-    width: 100vw;
+    background-image: url('/DC_TreasureMapPT_Final.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: $turqoise;
+    overflow: hidden;
 }
 
 * {
@@ -27,4 +33,20 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+.splash {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 75vw;
+}
+
+@media only screen and (max-width: 650px){
+    body {
+        background-image: url('/map-small.png');
+        background-size: auto;
+        background-position: top;
+    }
 }
