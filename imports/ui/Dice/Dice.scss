@@ -1,0 +1,113 @@
+.die {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background-color: beige;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin: 20px;
+
+    .pip {
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        background-color: black;
+        position: absolute;
+    }
+
+    &-1 {
+        .pip:first-child {
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            background-color: black;
+            position: absolute;
+        }
+    }
+    
+    &-2, &-3, &-5 {
+        .pip {
+            &:first-child {
+                left: 25%;
+                transform: translate(-50%, -50%);
+                top: 25%;
+            }
+
+            &:nth-child(2) {
+                right: 25%;
+                bottom: 25%;
+                transform: translate(50%, 50%);
+            }
+
+            &:nth-child(4) {
+                right: 25%;
+                top: 25%;
+                transform: translate(50%, -50%);
+            }
+            &:nth-child(5) {
+                left: 25%;
+                bottom: 25%;
+                transform: translate(-50%, 50%);
+            }
+        }
+    }
+
+    &-4 {
+        .pip {
+            &:first-child {
+                left: 30%;
+                top: 25%;
+                transform: translate(-50%, -50%);
+            }
+            &:nth-child(2) {
+                left: 30%;
+                bottom: 25%;
+                transform: translate(-50%, 50%);
+            }
+            &:nth-child(3) {
+                right: 30%;
+                top: 25%;
+                transform: translate(50%, -50%);
+            }
+            &:nth-child(4) {
+                right: 30%;
+                bottom: 25%;
+                transform: translate(50%, 50%);
+            }
+        }
+    }
+    &-6 {
+        .pip {
+            &:first-child {
+                left: 30%;
+                top: 20%;
+                transform: translate(-50%, -50%);
+            }
+            &:nth-child(2) {
+                left: 30%;
+                bottom: 20%;
+                transform: translate(-50%, 50%);
+            }
+            &:nth-child(3) {
+                left: 30%;
+                transform: translateX(-50%);
+            }
+            &:nth-child(4) {
+                right: 30%;
+                top: 20%;
+                transform: translate(50%, -50%);
+            }
+            &:nth-child(5) {
+                right: 30%;
+                bottom: 20%;
+                transform: translate(50%, 50%);
+            }
+            &:nth-child(6) {
+                right: 30%;
+                transform: translateX(50%);
+            }
+        }
+    }
+}
