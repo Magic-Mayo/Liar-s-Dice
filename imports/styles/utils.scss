@@ -1,0 +1,32 @@
+$turqoise: #40facd;
+$blueSky: #3aa6ff;
+
+select {
+    font-size: 25px;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 10px 15px;
+    box-shadow: #ddd 3px 3px 15px;
+}
+
+fieldset {
+}
+
+button {
+    border-radius: 9px;
+    padding: 8px 3px;
+    background-color: #f45;
+    font-style: oblique;
+    width: 300px;
+    margin: 30px;
+    font-size: 30px;
+    box-shadow: #222 10px 12.5px 30px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+label {
+    font-size: 30px;
+}
