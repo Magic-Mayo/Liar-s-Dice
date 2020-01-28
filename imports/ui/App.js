@@ -2,12 +2,19 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import Instruction from './Instruction';
 import Game from './Game';
+import Header from './Header';
+import Dice from './Dice';
 
 const App = () => (
     
     <Router>
+        <Header />
         <Route exact path='/'>
-            <h1>Welcome to Liar's Dice!</h1>
+            <Dice />
+            <Dice />
+            <Dice />
+            <Dice />
+            <Dice />
             <Link to='/instruction' className='instructions'>
                 <button>How to Play</button>
             </Link>
