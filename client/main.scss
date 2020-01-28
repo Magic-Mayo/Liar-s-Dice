@@ -1,31 +1,30 @@
+@font-face {
+    font-family: pirate;
+    src: url('/TreasureMapDeadhand-yLA3.ttf');
+}
+
+@import '../imports/styles/utils.scss';
 @import '../imports/ui/Dice/Dice.scss';
+@import '../imports/ui/Header/Header.scss';
 
 body {
-  padding: 10px;
-  font-family: sans-serif;
-  background-color: #215ad2;
-  width: 100%;
+    background-color: $blueSky;
+    width: 100vw;
 }
 
 * {
+    font-family: pirate;
+    box-sizing: border-box;
     border: none;
+    margin: 0;
+    padding: 0;
 }
 
 #react-target {
+    margin: 70px 0;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-
-    button {
-        border-radius: 11px;
-        width: 300px;
-        margin: 30px;
-        font-size: 20px;
-        box-shadow: #aaa 10px 12.5px 30px;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
 }
