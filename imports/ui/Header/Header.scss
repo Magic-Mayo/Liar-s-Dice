@@ -1,14 +1,14 @@
 .header {
     position: fixed;
     top: 0;
-    width: 100%;
-    background-color: $turqoise;
+    width: 105%;
+    background-color: $blueSky;
     text-align: center;
     height: 50px;
-    line-height: 50px;
-    box-shadow: #2ab 3px 15px 15px;
+    line-height: 60px;
+    box-shadow: #2ab 0 15px 10px;
     z-index: 50;
-
+    
     &-btn {
         width: 75px;
         position: fixed;
@@ -16,8 +16,9 @@
         background-color: transparent;
         margin: 0;
     }
-
+    
     &-title {
+        color: #000;
         font-weight: normal;
         font-size: 50px;
     }
