@@ -8,11 +8,11 @@ const App = () => (
     <Router>
         <Route exact path='/'>
             <h1>Welcome to Liar's Dice!</h1>
-            <Link to='/instruction'>
-                <button className='instructions'>How to Play</button>
+            <Link to='/instruction' className='instructions'>
+                <button>How to Play</button>
             </Link>
-            <Link to='/start'>
-                <button className='start'>Start Game!</button>
+            <Link to='/start' className='start'>
+                <button>Start Game!</button>
             </Link>
         </Route>
         <Switch>
