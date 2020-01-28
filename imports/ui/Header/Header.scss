@@ -1,0 +1,24 @@
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: $turqoise;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    box-shadow: #2ab 3px 15px 15px;
+    z-index: 50;
+
+    &-btn {
+        width: 75px;
+        position: fixed;
+        left: 5%;
+        background-color: transparent;
+        margin: 0;
+    }
+
+    &-title {
+        font-weight: normal;
+        font-size: 50px;
+    }
+}
