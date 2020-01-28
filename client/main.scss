@@ -4,8 +4,28 @@ body {
   padding: 10px;
   font-family: sans-serif;
   background-color: #215ad2;
+  width: 100%;
 }
 
 * {
     border: none;
+}
+
+#react-target {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+        border-radius: 11px;
+        width: 300px;
+        margin: 30px;
+        font-size: 20px;
+        box-shadow: #aaa 10px 12.5px 30px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
