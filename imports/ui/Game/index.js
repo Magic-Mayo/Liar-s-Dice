@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import {useSound} from '../../hooks';
 
-const rollDice = () => {
+const rollDice = props => {
 
+    if(props.sound){
+        const diceSound = new Audio('/dicehand.m4a');
+        diceSound.play();
+    }
 }
 
-const Game = () => {
+const Game = props => {
     const [gameStart, setGameStart] = useState(false);
     const [players, setPlayers] = useState(2);
     const [dice, setDice] = useState(5);
@@ -15,7 +20,8 @@ const Game = () => {
     return (
         <>
             {gameStart ?
-                <button type='button' className='roll-dice' onClick={rollDice}>Roll the dice!</button>
+                <button type='button' className='roll-dice' onClick={() => rollDice(props)}>Roll the dice!</button>
+
                 :
                 <div className='parameters'>
                     <fieldset>
@@ -39,6 +45,7 @@ const Game = () => {
                             <option value={10}>10</option>
                         </select>
                     </fieldset>
+
                     <button type='button' onClick={() => setGameStart(true)} className='btn-start'>Start Game!</button>
                 </div>
             }
