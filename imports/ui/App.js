@@ -34,17 +34,17 @@ const App = () => {
             <Header />
             <Route exact path='/'>
                 <div className='splash'>
-                    <Dice />
-                    <Dice />
-                    <Dice />
-                    <Dice />
-                    <Dice />
+                    <Dice number={2}/>
+                    <Dice number={3}/>
+                    <Dice number={4}/>
+                    <Dice number={5}/>
+                    <Dice number={6}/>
                 </div>
                 <Link to='/instruction' className='instructions'>
                     <button>How to Play</button>
                 </Link>
                 <Link to='/game' className='start'>
-                    <button>Start Game!</button>
+                    <button>Play!</button>
                 </Link>
             </Route>
             {settings && 
