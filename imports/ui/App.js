@@ -1,17 +1,34 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import Instruction from './Instruction';
 import Game from './Game';
 import Header from './Header';
 import Dice from './Dice';
 import Settings from './Settings';
-import {useSettings, useSound, useMusic} from '../hooks';
+import Icon from './Icon'
+const songOne = new Audio('/game.mp3');
 
 const App = () => {
-    const [settings, setSettings] = useSettings();
-    const [sound, setSound] = useSound();
-    const [music, setMusic] = useMusic();
+    const [settings, setSettings] = useState(false);
+    const [sound, setSound] = useState(false);
+    const [music, setMusic] = useState(false);
+    const [gameStart, setGameStart] = useState(false);
+
     
+    useEffect(()=>{        
+        if(music){
+            songOne.loop = true;
+            songOne.play();
+        } else {
+            songOne.pause();
+            songOne.currentTime = 0;
+        }
+    },[music]);
+
+    // useEffect(()=>{
+    //     setGameStart(false);
+    // },[gameStart])
+
     return (
         <Router>
             <Header />
@@ -44,14 +61,19 @@ const App = () => {
                     <Instruction />
                 </Route>
                 <Route path='/game'>
-                    <Game />
+                    <Game
+                    gameStart={gameStart}
+                    setGameStart={setGameStart}
+                    sound={sound}
+                    music={music} />
                 </Route>
             </Switch>
-            <img
-            src='/wheel.PNG'
-            alt='settings'
-            className='settings-icon'
-            onClick={()=>setSettings(true)}></img>
+            {gameStart &&
+                <Icon
+                icon='settings'
+                settings={settings}
+                setSettings={setSettings} />
+            }
         </Router>
     );
 }
