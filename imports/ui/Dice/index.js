@@ -4,8 +4,8 @@ const setRandNum = () => Math.floor(Math.random() * 6) + 1;
 
 const Dice = props => {
     const randNum = setRandNum();
-    const dieSize = [100, 75, 50];
-    const pipSize = [15, 10, 5];
+    const dieSize = [100, 75];
+    const pipSize = [19, 15];
 
     return (
         <div
