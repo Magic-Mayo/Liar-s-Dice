@@ -1,11 +1,9 @@
 .parameters {
     display: flex;
     justify-content: center;
-    // width: 100%;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background-color: $blueSky;
 
     &-container {
         display: flex;
@@ -13,16 +11,93 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+
+        label {
+            font-size: 40px;
+            text-shadow: #222 -2px 3px;
+            color: #eee;    
+        }
     }
 }
 
 .game {
     &-container {
+        margin-top: 30px;
         display: flex;
         justify-content: center;
-        align-items: center;
-        height: 80vh;
+        align-items: flex-start;
         width: 90vw;
         flex-wrap: wrap;
+    }
+    
+    &-choice {
+        width: 100vw;
+        text-align: center;
+        padding: 0 10px;
+        position: absolute;
+        bottom: 2vh;
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+            label {
+                font-size: 55px;
+                text-shadow: #222 -2px 3px;
+                color: #eee;
+            }
+        }
+    }
+    
+    &-bet {
+        position: relative;
+        height: 5vh;
+        width: 150px;
+        background-color: #eee;
+        font-size: 40px;
+        line-height: 5vh;
+        margin-bottom: 2vh;
+        border-radius: 5px;
+
+        &-btn {
+            background-color: $turqoise;
+            margin-bottom: 5px;
+        }
+        
+        &-down {
+            transform: rotate(-90deg);
+            position: absolute;
+            left: 1vh;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+        
+        &-up {
+            transform: rotate(90deg);
+            position: absolute;
+            right: 1vh;
+            
+            &:focus {
+                outline: none;
+            }
+            
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        &-dice {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
     }
 }
