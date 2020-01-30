@@ -1,8 +1,6 @@
 import React from 'react';
-import {useSound, useSettings} from '../../hooks';
 
 const Settings = props => {
-
     return (
         <div className='settings-modal'>
             <fieldset className='settings-audio'>
