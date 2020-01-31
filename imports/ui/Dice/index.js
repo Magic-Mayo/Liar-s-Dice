@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const Dice = props => {
     const dieSize = [10, 8, 6];
@@ -12,38 +12,38 @@ const Dice = props => {
             {width: `${dieSize[props.dice]}vh`, height: `${dieSize[props.dice]}vh`}}
         onClick={props.selectDie ? ()=>props.selectDie(props.number) : null}>
             
-            {props.number > 0 && 
+            {props.number > 0 &&
             <span
             className='pip'
             style={props.selection === props.number ?
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`, backgroundColor: 'beige'} :
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`}}></span>}
 
-            {props.number > 1 && 
+            {props.number > 1 &&
             <span className='pip'
             style={props.selection === props.number ?
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`, backgroundColor: 'beige'} :
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`}}></span>}
 
-            {props.number > 2 && 
+            {props.number > 2 &&
             <span className='pip'
             style={props.selection === props.number ?
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`, backgroundColor: 'beige'} :
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`}}></span>}
 
-            {props.number > 3 && 
+            {props.number > 3 &&
             <span className='pip'
             style={props.selection === props.number ?
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`, backgroundColor: 'beige'} :
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`}}></span>}
 
-            {props.number > 4 && 
+            {props.number > 4 &&
             <span className='pip'
             style={props.selection === props.number ?
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`, backgroundColor: 'beige'} :
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`}}></span>}
 
-            {props.number > 5 && 
+            {props.number > 5 &&
             <span className='pip'
             style={props.selection === props.number ?
                 {width: `${pipSize[props.pip]}vh`, height: `${pipSize[props.pip]}vh`, backgroundColor: 'beige'} :
