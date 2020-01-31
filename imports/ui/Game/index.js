@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import Dice from '../Dice';
+import {CPU} from '../CPU';
+
+const setRandNum = () => Math.floor(Math.random() * 6) + 1;
 
 const Game = props => {
     const [players, setPlayers] = useState(2);
@@ -15,10 +18,31 @@ const Game = props => {
     const [userDieChoice, setUserDieChoice] = useState(true);
     const [totalDice, setTotalDice] = useState(players*dice);
     const [allPlayersDice, setAllPlayersDice] = useState([[1,5,2,3,2],[2,5,6,1,3,4],[5,6,1,2,4,4,4]]);
+    const [CPU1] = CPU(dice);
+    const [CPU2] = CPU(dice);
+    const [CPU3] = CPU(dice);
+    const [CPU4] = CPU(dice);
+    const [CPU5] = CPU(dice);
 
-    const selectDice = e => setDice(parseInt(e.target.value))
-    const selectPlayers = e => setPlayers(parseInt(e.target.value))
-    const setRandNum = () => Math.floor(Math.random() * 6) + 1;
+    const startGame = e => {
+        e.preventDefault();
+        setStartDice([]);
+        for(let i=0; i<dice; i++){
+            setStartDice(prevState => [...prevState, i]);
+        }
+        props.setGameStart(true);
+        console.log(CPU1)
+        setAllPlayersDice(()=>{
+            switch(players){
+                case 2: [numArr, CPU1, CPU2]; break;
+                case 3: [numArr, CPU1, CPU2, CPU3]; break;
+                case 4: [numArr, CPU1, CPU2, CPU3, CPU4]; break;
+                case 5: [numArr, CPU1, CPU2, CPU3, CPU4, CPU5]; break;
+            }
+        })
+        console.log(allPlayersDice)
+    }
+
 
     const setPlayerDice = (player, correctCall) => {
         setAllPlayersDice(prevState => {
@@ -27,10 +51,6 @@ const Game = props => {
     }
 
     const chooseDice = () => {
-        setStartDice([]);
-        for(let i=0; i<dice; i++){
-            setStartDice(prevState => [...prevState, i]);
-        }
     }
     
     const rollDice = sound => {
@@ -120,31 +140,33 @@ const Game = props => {
                 </>
                 :
                 <div className='parameters-container'>
-                    <div className='parameters'>
-                        <fieldset>
-                            <label htmlFor='CPU'>How many CPU players?</label>
-                            <select value={players} onChange={selectPlayers}>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
-                                <option value={4}>4</option>
-                                <option value={5}>5</option>
-                            </select>
-                        </fieldset>
+                    <form onSubmit={startGame}>
+                        <div className='parameters'>
+                            <fieldset>
+                                <label htmlFor='CPU'>How many CPU players?</label>
+                                <select value={players} onChange={e => setPlayers(parseInt(e.target.value))}>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={4}>4</option>
+                                    <option value={5}>5</option>
+                                </select>
+                            </fieldset>
 
-                        <fieldset>
-                            <label>How many dice would you like to start with?</label>
-                            <select value={dice} onChange={selectDice} onBlur={chooseDice}>
-                                <option value={5}>5</option>
-                                <option value={6}>6</option>
-                                <option value={7}>7</option>
-                                <option value={8}>8</option>
-                                <option value={9}>9</option>
-                                <option value={10}>10</option>
-                            </select>
-                        </fieldset>
+                            <fieldset>
+                                <label>How many dice would you like to start with?</label>
+                                <select value={dice} onChange={e => setDice(parseInt(e.target.value))}>
+                                    <option value={5}>5</option>
+                                    <option value={6}>6</option>
+                                    <option value={7}>7</option>
+                                    <option value={8}>8</option>
+                                    <option value={9}>9</option>
+                                    <option value={10}>10</option>
+                                </select>
+                            </fieldset>
 
-                    </div>
-                    <button type='button' onClick={() => props.setGameStart(true)} className='btn-start'>Start Game!</button>
+                        </div>
+                        <button className='btn-start'>Start Game!</button>
+                    </form>
                     <Link to='/' className='btn-menu'>
                         <button>Main Menu</button>
                     </Link>
