@@ -68,12 +68,10 @@ const App = () => {
                     music={music} />
                 </Route>
             </Switch>
-            {gameStart &&
-                <Icon
-                icon='settings'
-                settings={settings}
-                setSettings={setSettings} />
-            }
+            <Icon
+            icon='settings'
+            settings={settings}
+            setSettings={setSettings} />
         </Router>
     );
 }
