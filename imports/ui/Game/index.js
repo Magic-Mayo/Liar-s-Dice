@@ -115,19 +115,14 @@ const Game = props => {
             6: 0
         };
 
-        if(turn > players) {
-            return setTurn(0);
-        }
-        if(turn <= players) {
-            setTurn(turn+1);
-        }
-        
-        if(lastNum > totalDice*.75 && odds() > 10){
-            return callBet(turn, turn-1);
-        }
-        allPlayersDice[`CPU${turn}`].map(val=>{
-            num[val] = num[val]++
-        })
+        if(turn > players) return setTurn(0);
+        // if(turn <= players) setTurn(turn+1);
+        if(lastNum > totalDice*.75 && odds() > 10) return callBet(turn, turn-1);
+
+        console.log(`CPU${turn}`)
+        // allPlayersDice[`CPU${turn}`].map(val=>{
+        //     num[val] = num[val]++
+        // })
 
     }
     
@@ -167,7 +162,8 @@ const Game = props => {
                         totalDice={totalDice}
                         userDieChoice={userDieChoice}
                         setUserDieChoice={setUserDieChoice}
-                        callBet={callBet} />
+                        callBet={callBet} 
+                        />
                     }
                     {turn !== 0 &&
                         <CPUTurn
@@ -178,12 +174,14 @@ const Game = props => {
                         allPlayersDice={allPlayersDice}
                         playerCalls={playerCalls}
                         cpuBetOrCall={cpuBetOrCall}
+                        turn={turn}
+                        setTurn={setTurn}
                         CPU1Name={CPU1Name}
                         CPU2Name={CPU2Name}
                         CPU3Name={CPU3Name}
                         CPU4Name={CPU4Name}
                         CPU5Name={CPU5Name}
-                         />
+                        />
                     }
                     {playerCalls && 
                         <div className='game-bet-called'>
