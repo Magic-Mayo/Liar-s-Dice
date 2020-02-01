@@ -77,8 +77,6 @@ const Game = props => {
         return setRolling(false);
     }
 
-    
-
     const whoCalled = () => {
         let playerCalling;
         let playerCalled;
