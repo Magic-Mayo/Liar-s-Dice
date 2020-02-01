@@ -105,18 +105,30 @@ const Game = props => {
         )
     }
     
-    const cpuBetOrCall = () => {
+    const cpuBetOrCall = setBet => {
+        const num = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0
+        };
+
         if(turn > players) {
-            setTurn(1);
             return setTurn(0);
+        }
+        if(turn <= players) {
+            setTurn(turn+1);
         }
         
         if(lastNum > totalDice*.75 && odds() > 10){
             return callBet(turn, turn-1);
         }
-        
-        // allPlayersDice[]
-        if(turn <= players) setTurn(turn+1);
+        allPlayersDice[`CPU${turn}`].map(val=>{
+            num[val] = num[val]++
+        })
+
     }
     
     useEffect(()=>{
@@ -140,10 +152,10 @@ const Game = props => {
                                 pip={dice < 9 ? 0 : 1}
                                 />
                         ))}
-                        {!rolling &&
-                            <button type='button' className='roll-dice' onClick={() => rollDice(props.sound)}>Roll the dice!</button>
-                        }
                     </div>
+                    {!rolling &&
+                        <button type='button' className='roll-dice' onClick={() => rollDice(props.sound)}>Roll the dice!</button>
+                    }
                     {rolling && turn === 0 &&
                         <Choice
                         setLastDie={setLastDie}
