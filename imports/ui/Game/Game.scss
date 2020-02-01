@@ -22,6 +22,13 @@
     }
 }
 
+.roll-dice {
+    position: absolute;
+    bottom: 4vh;
+    left: 45%;
+    transform: translateX(-50%);
+}
+
 .game {
     &-container {
         margin-top: 30px;
@@ -30,6 +37,7 @@
         align-items: flex-start;
         width: 90vw;
         flex-wrap: wrap;
+
     }
     
     &-choice {
