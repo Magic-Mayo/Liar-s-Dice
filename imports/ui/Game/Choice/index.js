@@ -33,7 +33,7 @@ const Choice = props => {
                 </div>
                 <button type='button' className='game-bet-btn' onClick={userMakeBet}>Choose</button>
                 {props.lastNum > 1 &&
-                    <button type='button' className='game-call-btn' onClick={()=>props.callBet(props.whosTurn, props.players)}>Call</button>
+                    <button type='button' className='game-call-btn' onClick={()=>props.callBet(props.whoseTurn, props.players)}>Call</button>
                 }
             </form>
         </div>
