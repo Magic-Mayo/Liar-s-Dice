@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const CPUTurn = props => {
+    const [cpuBet, setCpuBet] = useState();
 
     return (
         <div className='CPU-container'>
@@ -12,9 +13,9 @@ const CPUTurn = props => {
                 props.turn === 4 ? props.CPU4Name :
                 props.CPU5Name
                 }
-                {" "}bets {/* code for what CPU bets goes here */}
+                {" "}bets {cpuBet}
             </span>
-            <button type='button' onClick={props.cpuBetOrCall}>Next</button>
+            <button type='button' onClick={()=>props.cpuBetOrCall(setCpuBet)}>Next</button>
         </div>
     )
 }
