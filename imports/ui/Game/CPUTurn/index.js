@@ -3,6 +3,10 @@ import React, {useState} from 'react';
 const CPUTurn = props => {
     const [cpuBet, setCpuBet] = useState();
 
+    useEffect(()=>{
+        props.setTurn(props.turn+1);
+    },[])
+
     return (
         <div className='CPU-container'>
             <span className='CPU-choice'>
