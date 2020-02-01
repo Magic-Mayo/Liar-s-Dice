@@ -4,6 +4,7 @@ import Dice from '../Dice';
 import CPU from '../CPU';
 import Parameters from '../Parameters';
 import Choice from './Choice';
+import CPUTurn from './CPUTurn';
 
 const setRandNum = () => Math.floor(Math.random() * 6) + 1;
 const odds = () => Math.floor(Math.random()*100)+1;
@@ -21,7 +22,7 @@ const Game = props => {
     const [totalDice, setTotalDice] = useState(players*dice);
     const [allPlayersDice, setAllPlayersDice] = useState();
     const [playerCalls, setPlayerCalls] = useState(false);
-    const [whosTurn, setWhosTurn] = useState('player');
+    const [turn, setTurn] = useState(0);
     const [CPU1, CPU1Name] = CPU(dice, rolling);
     const [CPU2, CPU2Name] = CPU(dice, rolling);
     const [CPU3, CPU3Name] = CPU(dice, rolling);
@@ -72,29 +73,16 @@ const Game = props => {
         });
 
         if(bet >= lastNum) return setPlayerDice(playerCalling, false);
-        return setPlayerDice(playerBetting, false);
+        setPlayerDice(playerBetting, false);
+        return setRolling(false);
     }
 
-    const cpuBetOrCall = () => {
-        console.log(players)
-        if(whosTurn === `CPU${players}`) return setWhosTurn('player');
-        setWhosTurn(`CPU${whosTurn+1}`);
-        if(lastNum > totalDice*.75 && odds() > 10){
-            callBet(whosTurn, whosTurn-1);
-        }
-        
-        // allPlayersDice[whosTurn]
-        
-    }
     
-    useEffect(()=>{
-        if(whosTurn !== 'player') cpuBetOrCall();
-    },[whosTurn]);
 
     const whoCalled = () => {
         let playerCalling;
         let playerCalled;
-        switch(whosTurn){
+        switch(turn){
             case 0: playerCalling = 'You'; break;
             case 1: playerCalling = CPU1Name; break;
             case 2: playerCalling = CPU2Name; break;
@@ -104,7 +92,7 @@ const Game = props => {
             case 6: playerCalling = CPU6Name; break;
         }
 
-        switch(whosTurn-1){
+        switch(turn-1){
             case 5: playerCalled = 'You'; break;
             case 0: playerCalled = CPU1Name; break;
             case 1: playerCalled = CPU2Name; break;
@@ -118,13 +106,26 @@ const Game = props => {
             <span>{playerCalling} called {playerCalled}!  Show your hand!</span>
         )
     }
-
+    
+    const cpuBetOrCall = () => {
+        if(turn > players) {
+            setTurn(1);
+            return setTurn(0);
+        }
+        
+        if(lastNum > totalDice*.75 && odds() > 10){
+            return callBet(turn, turn-1);
+        }
+        
+        // allPlayersDice[]
+        if(turn <= players) setTurn(turn+1);
+    }
+    
     useEffect(()=>{
         setNumArr([]);
         for(let i=0; i<startDice.length; i++){
             setNumArr(prevState=>[...prevState, setRandNum()])
         }
-        
     },[rolling])
 
     return (
@@ -145,7 +146,7 @@ const Game = props => {
                             <button type='button' className='roll-dice' onClick={() => rollDice(props.sound)}>Roll the dice!</button>
                         }
                     </div>
-                    {rolling && whosTurn === 'player' &&
+                    {rolling && turn === 0 &&
                         <Choice
                         setLastDie={setLastDie}
                         setLastNum={setLastNum}
@@ -157,6 +158,22 @@ const Game = props => {
                         userDieChoice={userDieChoice}
                         setUserDieChoice={setUserDieChoice}
                         callBet={callBet} />
+                    }
+                    {turn !== 0 &&
+                        <CPUTurn
+                        players={players}
+                        turn={turn}
+                        totalDice={totalDice}
+                        lastNum={lastNum}
+                        allPlayersDice={allPlayersDice}
+                        playerCalls={playerCalls}
+                        cpuBetOrCall={cpuBetOrCall}
+                        CPU1Name={CPU1Name}
+                        CPU2Name={CPU2Name}
+                        CPU3Name={CPU3Name}
+                        CPU4Name={CPU4Name}
+                        CPU5Name={CPU5Name}
+                         />
                     }
                     {playerCalls && 
                         <div className='game-bet-called'>
