@@ -35,16 +35,14 @@ export const CPU = (numDice, rolling) => {
 
     useEffect(()=>{
         setDice([]);
-        for(let i=0; i<numDice; i++){
-        setDice(prevState=>[...prevState, setRandNum()])
-        }
+        for(let i=0; i<numDice; i++) setDice(prevState=>[...prevState, setRandNum()])
     },[rolling])
 
     useEffect(()=>{
         setName(pickName());
     },[name])
 
-    return [dice, name];
+    return [dice, name, setDice];
 }
 
 export default CPU;
