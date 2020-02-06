@@ -1,63 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import useDice from '../../hooks';
 import Dice from '../Dice';
 import CPU from '../CPU';
 import Parameters from '../Parameters';
 import Choice from './Choice';
 import CPUTurn from './CPUTurn';
 
-const setRandNum = () => Math.floor(Math.random() * 6) + 1;
 const odds = () => Math.floor(Math.random()*100)+1;
 
 const Game = props => {
+    const [gameStart, setGameStart] = useState(false);
     const [players, setPlayers] = useState(2);
-    const [dice, setDice] = useState(5);
-    const [startDice, setStartDice] = useState([0,1,2,3,4]);
-    const [rolling, setRolling] = useState(false);
+    const [currentDice, setCurrentDice] = useState(5);
     const [numChoice, setNumChoice] = useState(1);
     const [numArr, setNumArr] = useState([]);
     const [lastNum, setLastNum] = useState(0);
     const [lastDie, setLastDie] = useState(0);
     const [userDieChoice, setUserDieChoice] = useState(true);
-    const [totalDice, setTotalDice] = useState(players*dice);
-    const [allPlayersDice, setAllPlayersDice] = useState();
+    const [totalDice, setTotalDice] = useState(players*currentDice);
     const [playerCalls, setPlayerCalls] = useState(false);
     const [turn, setTurn] = useState(0);
-    const [CPU1, CPU1Name] = CPU(dice, rolling);
-    const [CPU2, CPU2Name] = CPU(dice, rolling);
-    const [CPU3, CPU3Name] = CPU(dice, rolling);
-    const [CPU4, CPU4Name] = CPU(dice, rolling);
-    const [CPU5, CPU5Name] = CPU(dice, rolling);
-
-    const startGame = e => {
-        e.preventDefault();
-        setStartDice([]);
-        for(let i=0; i<dice; i++) setStartDice(prevState => [...prevState, i]);
-        props.setGameStart(true);
-        setAllPlayersDice(()=>{
-            switch(players){
-                case 2: return {player: numArr, CPU1: CPU1, CPU2: CPU2};
-                case 3: return {player: numArr, CPU1: CPU1, CPU2: CPU2, CPU3: CPU3};
-                case 4: return {player: numArr, CPU1: CPU1, CPU2: CPU2, CPU3: CPU3, CPU4: CPU4};
-                case 5: return {player: numArr, CPU1: CPU1, CPU2: CPU2, CPU3: CPU3, CPU4: CPU4, CPU5: CPU5};
-            }
-        });
-    }
-
-
-    const setPlayerDice = (player, correctCall) => {
-        setAllPlayersDice(prevState => {
-            []
-        })
-    }
+    const [
+        dice,
+        roll,
+        setDice,
+        setRoll,
+        setNumDice,
+        setCpuPlayers,
+        CPU1Name,
+        CPU2Name,
+        CPU3Name,
+        CPU4Name,
+        CPU5Name
+    ] = useDice(currentDice, players);
     
     const rollDice = sound => {
-        setRolling(true);
+        setNumDice(currentDice);    
+        
         if(sound){
             const diceSound = new Audio('/dicehand.m4a');
             diceSound.play();
-            return setTimeout(()=>setRolling(true),2325);
+            return setTimeout(()=>setRollg(true),2325);
         }
+        setRoll(true);
     }
     
     const callBet = (playerBetting, playerCalling) => {
@@ -74,30 +59,20 @@ const Game = props => {
 
         if(bet >= lastNum) return setPlayerDice(playerCalling, false);
         setPlayerDice(playerBetting, false);
-        return setRolling(false);
+        return setRoll(false);
     }
 
     const whoCalled = () => {
         let playerCalling;
         let playerCalled;
         switch(turn){
-            case 0: playerCalling = 'You'; break;
-            case 1: playerCalling = CPU1Name; break;
-            case 2: playerCalling = CPU2Name; break;
-            case 3: playerCalling = CPU3Name; break;
-            case 4: playerCalling = CPU4Name; break;
-            case 5: playerCalling = CPU5Name; break;
-            case 6: playerCalling = CPU6Name; break;
-        }
-
-        switch(turn-1){
-            case 5: playerCalled = 'You'; break;
-            case 0: playerCalled = CPU1Name; break;
-            case 1: playerCalled = CPU2Name; break;
-            case 2: playerCalled = CPU3Name; break;
-            case 3: playerCalled = CPU4Name; break;
-            case 4: playerCalled = CPU5Name; break;
-            case -1: playerCalled = CPU6Name; break;
+            case 0: playerCalling = 'You'; playerCalled = CPU6Name; break;
+            case 1: playerCalling = CPU1Name; playerCalled = 'You'; break;
+            case 2: playerCalling = CPU2Name; playerCalled = CPU1Name; break;
+            case 3: playerCalling = CPU3Name; playerCalled = CPU2Name; break;
+            case 4: playerCalling = CPU4Name; playerCalled = CPU3Name; break;
+            case 5: playerCalling = CPU5Name; playerCalled = CPU4Name; break;
+            case 6: playerCalling = CPU6Name; playerCalled = CPU5Name; break;
         }
 
         return (
@@ -115,43 +90,38 @@ const Game = props => {
             6: 0
         };
 
-        if(turn > players) return setTurn(0);
-        // if(turn <= players) setTurn(turn+1);
+        setTurn(()=>{
+            if(turn > players) return 0;
+            return turn+1;
+        });
         if(lastNum > totalDice*.75 && odds() > 10) return callBet(turn, turn-1);
 
-        console.log(`CPU${turn}`)
         // allPlayersDice[`CPU${turn}`].map(val=>{
         //     num[val] = num[val]++
         // })
 
     }
     
-    useEffect(()=>{
-        setNumArr([]);
-        for(let i=0; i<startDice.length; i++){
-            setNumArr(prevState=>[...prevState, setRandNum()])
-        }
-    },[rolling])
-
     return (
         <>
-            {props.gameStart ?
+        {console.log(dice)}
+            {gameStart ?
                 <>
                     <div className='game-container'>
-                        {rolling && 
-                            numArr.map((die, key)=>(
+                        {roll &&
+                            dice.map((die, key)=>(
                                 <Dice
                                 key={key}
                                 number={die}
-                                dice={dice < 9 ? 0 : 1}
-                                pip={dice < 9 ? 0 : 1}
+                                currentDice={currentDice < 9 ? 0 : 1}
+                                pip={currentDice < 9 ? 0 : 1}
                                 />
                         ))}
                     </div>
-                    {!rolling &&
-                        <button type='button' className='roll-dice' onClick={() => rollDice(props.sound)}>Roll the dice!</button>
+                    {!roll &&
+                        <button type='button' className='roll-dice' onClick={() => rollDice(props.sound)}>Roll the Dice!</button>
                     }
-                    {rolling && turn === 0 &&
+                    {roll && turn === 0 &&
                         <Choice
                         setLastDie={setLastDie}
                         setLastNum={setLastNum}
@@ -171,7 +141,6 @@ const Game = props => {
                         turn={turn}
                         totalDice={totalDice}
                         lastNum={lastNum}
-                        allPlayersDice={allPlayersDice}
                         playerCalls={playerCalls}
                         cpuBetOrCall={cpuBetOrCall}
                         turn={turn}
@@ -193,10 +162,10 @@ const Game = props => {
                 </>
                 :
                 <Parameters
-                setDice={setDice}
+                setCurrentDice={setCurrentDice}
                 setPlayers={setPlayers}
-                startGame={startGame}
-                dice={dice}
+                setGameStart={setGameStart}
+                currentDice={currentDice}
                 players={players}
                 />
             }
