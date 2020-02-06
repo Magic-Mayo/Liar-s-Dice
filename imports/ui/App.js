@@ -12,8 +12,6 @@ const App = () => {
     const [settings, setSettings] = useState(false);
     const [sound, setSound] = useState(false);
     const [music, setMusic] = useState(false);
-    const [gameStart, setGameStart] = useState(false);
-
     
     useEffect(()=>{        
         if(music){
@@ -24,10 +22,6 @@ const App = () => {
             songOne.currentTime = 0;
         }
     },[music]);
-
-    // useEffect(()=>{
-    //     setGameStart(false);
-    // },[gameStart])
 
     return (
         <Router>
@@ -62,8 +56,6 @@ const App = () => {
                 </Route>
                 <Route path='/game'>
                     <Game
-                    gameStart={gameStart}
-                    setGameStart={setGameStart}
                     sound={sound}
                     music={music} />
                 </Route>
