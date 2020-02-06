@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 export const Parameters = props => {
     return (
         <div className='parameters-container'>
-        <form onSubmit={props.startGame}>
             <div className='parameters'>
                 <fieldset>
                     <label htmlFor='CPU'>How many CPU players?</label>
@@ -29,8 +28,7 @@ export const Parameters = props => {
                 </fieldset>
 
             </div>
-            <button className='btn-start'>Start Game!</button>
-        </form>
+            <button className='btn-start' onClick={() => props.setGameStart(true)}>Start Game!</button>
         <Link to='/' className='btn-menu'>
             <button>Main Menu</button>
         </Link>
