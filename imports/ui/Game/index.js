@@ -13,7 +13,6 @@ const Game = props => {
     const [players, setPlayers] = useState(2);
     const [currentDice, setCurrentDice] = useState(5);
     const [numChoice, setNumChoice] = useState(1);
-    const [numArr, setNumArr] = useState([]);
     const [lastNum, setLastNum] = useState(0);
     const [lastDie, setLastDie] = useState(0);
     const [userDieChoice, setUserDieChoice] = useState(true);
@@ -35,7 +34,7 @@ const Game = props => {
     ] = useDice(currentDice, players);
     
     const rollDice = sound => {
-        setNumDice(currentDice);    
+        setNumDice(currentDice);
         
         if(sound){
             const diceSound = new Audio('/dicehand.m4a');
@@ -94,7 +93,10 @@ const Game = props => {
             if(turn > players) return 0;
             return turn+1;
         });
-        if(lastNum > totalDice*.75 && odds() > 10) return callBet(turn, turn-1);
+
+        if(lastNum > totalDice*.75) return callBet(turn, turn-1);
+        if(lastNum > totalDice*.65 && odds() > 10) return callBet(turn, turn-1);
+        // if(lastNum )
 
         // allPlayersDice[`CPU${turn}`].map(val=>{
         //     num[val] = num[val]++
@@ -104,7 +106,6 @@ const Game = props => {
     
     return (
         <>
-        {console.log(dice)}
             {gameStart ?
                 <>
                     <div className='game-container'>
@@ -113,7 +114,7 @@ const Game = props => {
                                 <Dice
                                 key={key}
                                 number={die}
-                                currentDice={currentDice < 9 ? 0 : 1}
+                                dice={currentDice < 9 ? 0 : 1}
                                 pip={currentDice < 9 ? 0 : 1}
                                 />
                         ))}
