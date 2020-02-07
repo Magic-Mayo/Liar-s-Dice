@@ -17,7 +17,7 @@ export const Parameters = props => {
 
                 <fieldset>
                     <label>How many dice would you like to start with?</label>
-                    <select value={props.dice} onChange={e => props.setDice(parseInt(e.target.value))}>
+                    <select value={props.dice} onChange={e => props.setCurrentDice(parseInt(e.target.value))}>
                         <option value={5}>5</option>
                         <option value={6}>6</option>
                         <option value={7}>7</option>
