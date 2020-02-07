@@ -44,7 +44,6 @@ export const useDice = (currentDice, cpu) => {
         const [name, setName] = useState();
     
         useEffect(()=>{
-            console.log('cpu roll')
             setDice([]);
             setDice(()=>{
                 const nums =[];
@@ -55,10 +54,10 @@ export const useDice = (currentDice, cpu) => {
     
         useEffect(()=>{
             setName(pickName());
-        },[name])
+        },[])
     
         return [dice, name, setDice];
-    }    
+    }
     
     const [CPU1, CPU1Name, CPU1SetDice] = CPU(numDice);
     const [CPU2, CPU2Name, CPU2SetDice] = CPU(numDice);
@@ -67,7 +66,6 @@ export const useDice = (currentDice, cpu) => {
     const [CPU5, CPU5Name, CPU5SetDice] = CPU(numDice);
     
     useEffect(()=>{
-        console.log('player roll')
         setDice([]);
         setDice(()=>{
             const nums =[];
