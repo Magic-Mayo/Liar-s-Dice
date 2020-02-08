@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useDice from '../../hooks';
 import Dice from '../Dice';
-import CPU from '../CPU';
 import Parameters from '../Parameters';
 import Choice from './Choice';
 import CPUTurn from './CPUTurn';
@@ -30,7 +29,13 @@ const Game = props => {
         CPU2Name,
         CPU3Name,
         CPU4Name,
-        CPU5Name
+        CPU5Name,
+        CPU1,
+        CPU2,
+        CPU3,
+        CPU4,
+        CPU5,
+        allPlayersDice
     ] = useDice(currentDice, players);
     
     const rollDice = sound => {
@@ -79,7 +84,9 @@ const Game = props => {
         )
     }
     
-    const cpuBetOrCall = setBet => {
+    const cpuBetOrCall = () => {
+        let CPU;
+        let highest = 0;
         const num = {
             1: 0,
             2: 0,
@@ -94,6 +101,20 @@ const Game = props => {
             return turn+1;
         });
 
+        switch(turn){
+            case 0: CPU = CPU1; break;
+            case 1: CPU = CPU2; break;
+            case 2: CPU = CPU3; break;
+            case 3: CPU = CPU4; break;
+            case 4: CPU = CPU5; break;
+        }
+        
+        CPU.map(val => num[val] = num[val] + 1);
+
+        for(let key in num){
+            if(num[key] > highest) highest = key
+        }
+        console.log(highest)
         if(lastNum > totalDice*.75) return callBet(turn, turn-1);
         if(lastNum > totalDice*.65 && odds() > 10) return callBet(turn, turn-1);
         // if(lastNum )
@@ -126,10 +147,11 @@ const Game = props => {
                         <Choice
                         setLastDie={setLastDie}
                         setLastNum={setLastNum}
+                        lastNum={lastNum}
+                        lastDie={lastDie}
                         numChoice={numChoice}
                         cpuBetOrCall={cpuBetOrCall}
                         setNumChoice={setNumChoice}
-                        lastNum={lastNum}
                         totalDice={totalDice}
                         userDieChoice={userDieChoice}
                         setUserDieChoice={setUserDieChoice}
@@ -137,22 +159,20 @@ const Game = props => {
                         />
                     }
                     {turn !== 0 &&
-                        <CPUTurn
-                        players={players}
-                        turn={turn}
-                        totalDice={totalDice}
-                        lastNum={lastNum}
-                        playerCalls={playerCalls}
-                        cpuBetOrCall={cpuBetOrCall}
-                        turn={turn}
-                        setTurn={setTurn}
-                        CPU1Name={CPU1Name}
-                        CPU2Name={CPU2Name}
-                        CPU3Name={CPU3Name}
-                        CPU4Name={CPU4Name}
-                        CPU5Name={CPU5Name}
-                        />
-                    }
+                        <div className='CPU-container'>
+                            <span className='CPU-choice'>
+                                {
+                                turn === 1 ? CPU1Name :
+                                turn === 2 ? CPU2Name :
+                                turn === 3 ? CPU3Name :
+                                turn === 4 ? CPU4Name :
+                                CPU5Name
+                                }
+                                {" "}bets {}
+                            </span>
+                            <button type='button' onClick={cpuBetOrCall}>Next</button>
+                        </div>
+                }
                     {playerCalls && 
                         <div className='game-bet-called'>
                             <span>
