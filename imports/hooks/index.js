@@ -36,9 +36,8 @@ const CPU = (currentDice) => {
     const [roll, setRoll] = useState(false);
 
     useEffect(()=>{
-        setDice([]);
         setDice(()=>{
-            const nums =[];
+            const nums = [];
             for(let i=0; i<numDice; i++) nums.push(setRandNum())
             return nums;
         })
@@ -54,7 +53,7 @@ const CPU = (currentDice) => {
 export const useDice = (currentDice, cpu) => {
     const [dice, setDice] = useState();
     const [numDice, setNumDice] = useState(currentDice)
-    const [roll, setRoll] = useState(false);
+    const [roll, setRoll] = useState();
     const [cpuPlayers, setCpuPlayers] = useState(cpu);
     const [allPlayersDice, setAllPlayersDice] = useState();
     const [CPU1, CPU1Name, CPU1Roll, CPU1SetDice, CPU1SetRoll] = CPU(numDice);
@@ -64,7 +63,6 @@ export const useDice = (currentDice, cpu) => {
     const [CPU5, CPU5Name, CPU5Roll, CPU5SetDice, CPU5SetRoll] = CPU(numDice);
     
     useEffect(()=>{
-        setDice([]);
         setDice(()=>{
             const nums =[];
             for(let i=0; i<numDice; i++) nums.push(setRandNum())
@@ -88,7 +86,7 @@ export const useDice = (currentDice, cpu) => {
         });
     },[dice, CPU1, CPU2, CPU3, CPU4, CPU5])
 
-    return [dice, roll, setDice, setRoll, setNumDice, setCpuPlayers, CPU1Name, CPU2Name, CPU3Name, CPU4Name, CPU5Name, CPU1, CPU2, CPU3, CPU4, CPU5, allPlayersDice];
+    return {dice, roll, setDice, setRoll, setNumDice, setCpuPlayers, CPU1Name, CPU2Name, CPU3Name, CPU4Name, CPU5Name, CPU1, CPU2, CPU3, CPU4, CPU5, allPlayersDice};
 }
 
 export default useDice;
