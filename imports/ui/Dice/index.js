@@ -7,10 +7,36 @@ const Dice = props => {
     return (
         <div
         className={`die die-${props.number} ${props.selection ? 'die-hover' : ''}`}
-        style={props.selection === props.number ? 
-            {boxShadow: '#222 -12px 18px 10px', width: `${dieSize[props.dice]}vh`, height: `${dieSize[props.dice]}vh`, backgroundColor: 'black'} :
-            {width: `${dieSize[props.dice]}vh`, height: `${dieSize[props.dice]}vh`}}
-        onClick={props.selectDie && props.number > props.lastDie || props.selection > props.lastDie ? ()=>{props.selectDie(props.number); props.setError(false)} : props.setError ? props.setError(true) : null}>
+        style={
+            props.selection === props.number ? 
+                {boxShadow: '#222 -12px 18px 10px', width: `${dieSize[props.dice]}vh`, height: `${dieSize[props.dice]}vh`, backgroundColor: 'black'}
+            
+            :
+
+            props.number < props.lastDie && props.numChoice === props.lastNum ?
+                {width: `${dieSize[props.dice]}vh`, height: `${dieSize[props.dice]}vh`, opacity: '.5'}
+            
+            :
+                
+                {width: `${dieSize[props.dice]}vh`, height: `${dieSize[props.dice]}vh`}}
+        onClick={
+            props.selectDie && props.number > props.lastDie || props.numChoice > props.lastNum ?
+            ()=>{
+                props.setError(false);
+                props.selectDie(props.number);
+            }
+
+            :
+
+            props.setError ? 
+            ()=>{
+                props.setError(true)
+                setTimeout(()=>props.setError(false), 2000)
+            }
+            
+            :
+            
+            null}>
             
             {props.number > 0 &&
             <span
