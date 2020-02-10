@@ -23,8 +23,8 @@ const Choice = props => {
                 onChange={(e)=>props.setNumChoice(e.target.value)}
                 >
                     {props.numChoice}
-                    <span className='game-bet-down' onClick={props.numChoice > props.lastNum ? ()=>{setError(false); props.setNumChoice(props.numChoice-1)} : null}>&lt;</span>
-                    <span className='game-bet-up' onClick={()=>props.numChoice < props.totalDice ? props.setNumChoice(props.numChoice+1) : null}>&lt;</span>
+                    <span className='game-bet-down' onClick={props.numChoice > props.lastNum ? ()=>props.setNumChoice(props.numChoice-1) : null}>&lt;</span>
+                    <span className='game-bet-up' onClick={props.numChoice < props.totalDice ? ()=>{setError(false); props.setNumChoice(props.numChoice+1)} : null}>&lt;</span>
                 </span>
                 <div className='game-bet-dice'>
                     <Dice numChoice={props.numChoice} lastNum={props.lastNum} setError={setError} lastDie={props.lastDie} selectDie={props.setUserDieChoice} selection={props.userDieChoice} number={1} dice={2} pip={2}/>
@@ -36,7 +36,7 @@ const Choice = props => {
                 </div>
                 <button type='button' className='game-bet-btn' onClick={userMakeBet}>Choose</button>
                 {props.lastNum > 1 &&
-                    <button type='button' className='game-call-btn' onClick={()=>props.callBet(props.whoseTurn, props.players)}>Call Last Bet</button>
+                    <button type='button' className='game-call-btn' onClick={()=>props.callBet(props.turn, props.players)}>Call Last Bet</button>
                 }
             </form>
             
