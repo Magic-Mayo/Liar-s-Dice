@@ -3,7 +3,6 @@ import useDice from '../../hooks';
 import Dice from '../Dice';
 import Parameters from '../Parameters';
 import Choice from './Choice';
-import CPUTurn from './CPUTurn';
 
 const odds = () => Math.floor(Math.random()*100)+1;
 
@@ -18,7 +17,8 @@ const Game = props => {
     const [totalDice, setTotalDice] = useState(players*currentDice);
     const [playerCalls, setPlayerCalls] = useState(false);
     const [turn, setTurn] = useState(0);
-    const [
+    const [bet, setBet] = useState(0);
+    const {
         dice,
         roll,
         setDice,
@@ -36,7 +36,7 @@ const Game = props => {
         CPU4,
         CPU5,
         allPlayersDice
-    ] = useDice(currentDice, players);
+    } = useDice(currentDice, players);
     
     const rollDice = sound => {
         setNumDice(currentDice);
@@ -50,7 +50,6 @@ const Game = props => {
     }
     
     const callBet = (playerBetting, playerCalling) => {
-        const bet = 0;
         const allDice = [];
         setPlayerCalls(true);
         for(let key in allPlayersDice){
@@ -58,29 +57,28 @@ const Game = props => {
         }
 
         allDice.forEach(val=>{
-            if(val === lastDie) bet++;
+            if(val === lastDie) setBet(bet + 1);
         });
 
-        if(bet >= lastNum) return setPlayerDice(playerCalling, false);
-        setPlayerDice(playerBetting, false);
-        return setRoll(false);
     }
 
     const whoCalled = () => {
         let playerCalling;
         let playerCalled;
         switch(turn){
-            case 0: playerCalling = 'You'; playerCalled = CPU6Name; break;
+            case 0: playerCalling = 'You'; playerCalled = CPU5Name; break;
             case 1: playerCalling = CPU1Name; playerCalled = 'You'; break;
             case 2: playerCalling = CPU2Name; playerCalled = CPU1Name; break;
             case 3: playerCalling = CPU3Name; playerCalled = CPU2Name; break;
             case 4: playerCalling = CPU4Name; playerCalled = CPU3Name; break;
             case 5: playerCalling = CPU5Name; playerCalled = CPU4Name; break;
-            case 6: playerCalling = CPU6Name; playerCalled = CPU5Name; break;
         }
 
         return (
-            <span>{playerCalling} called {playerCalled}!  Show your hand!</span>
+            <>
+                <span>{playerCalling} called {playerCalled}!  Show your hand!  {playerCalled} bet {lastNum} {lastDie}'s.  There {bet > 1 ? 'are' : 'is'} {bet} {lastDie}{bet > 1 ? "'s" : ""}!  {bet >= lastNum ? playerCalling : playerCalled} loses!</span>
+                <button type='button' onClick={()=>{setRoll(false); setPlayerCalls(false);}}>Next Round!</button>
+            </>
         )
     }
     
@@ -95,12 +93,7 @@ const Game = props => {
             5: 0,
             6: 0
         };
-
-        setTurn(()=>{
-            if(turn > players) return 0;
-            return turn+1;
-        });
-
+        
         switch(turn){
             case 0: CPU = CPU1; break;
             case 1: CPU = CPU2; break;
@@ -109,12 +102,17 @@ const Game = props => {
             case 4: CPU = CPU5; break;
         }
         
+        setTurn(()=>{
+            if(turn === players) return 0;
+            return turn+1;
+        });
+
         CPU.map(val => num[val] = num[val] + 1);
 
         for(let key in num){
             if(num[key] > highest) highest = key
         }
-        console.log(highest)
+
         if(lastNum > totalDice*.75) return callBet(turn, turn-1);
         if(lastNum > totalDice*.65 && odds() > 10) return callBet(turn, turn-1);
         // if(lastNum )
@@ -155,7 +153,8 @@ const Game = props => {
                         totalDice={totalDice}
                         userDieChoice={userDieChoice}
                         setUserDieChoice={setUserDieChoice}
-                        callBet={callBet} 
+                        callBet={callBet}
+                        turn={turn}
                         />
                     }
                     {turn !== 0 &&
