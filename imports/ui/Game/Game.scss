@@ -124,3 +124,46 @@
 
     }
 }
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    color: #eee;
+    width: 90vw;
+    height: 65vh;
+    line-height: 40px;
+    
+    &-menu {
+        color: #000;
+        text-decoration: none;
+        position: fixed;
+        top: .5vh;
+        left: 5vw;
+        font-size: 50px;
+        line-height: 50px;
+        z-index: 51;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    
+    .game-bet {
+        color: #000;
+        &-btn, &-up, &-down {
+            &:hover {
+                cursor: default;
+            }
+        }
+    }
+
+    &-next {
+        position: absolute;
+        bottom: 3vh;
+        left: 50%;
+        transform: translateX(-60%);
+    }
+}
