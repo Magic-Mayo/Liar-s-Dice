@@ -1,44 +1,55 @@
 import {useState, useEffect} from 'react';
 
-const setRandNum = () => Math.floor(Math.random() * 6) + 1;
+const setRandNum = max => Math.floor(Math.random() * max) + 1;
 
-const pickName = () => {
-    const names = [
-        "Wylie 'The Blue Fox' Yelland",
-        "Errol 'Jolly Roger' Seamen",
-        "Jake 'Salty Dog' Ninnies",
-        "Gordon 'Shiny Buckles' Horn",
-        "Nelson 'Gold Fiend' Docherty",
-        "Samuel 'Tall Story' Scott",
-        "Jacob 'Sly Dog' Craggs",
-        "Tobias 'Saucy Devil' Dogg",
-        "Samson 'Bonny Baby' Pigg",
-        "Wade 'Loud Limey' Locke",
-        'Esme "One-Eyed" Goodwin',
-        'Gail "Silver Tooth" Yelland',
-        'Bella "Ugly Mug" Vague',
-        'Pearl "Black Beard" Shakes',
-        'Peggy "Red Locks" Ripper',
-        `Stella "Rum Drunk" Rugged`,
-        'Harriet "Black Beard" Raw',
-        'Pearl "Rum Drunk" Raw',
-        'Lil "Coconut Crazy" Locke',
-        'Carrie "Dead Man" Brown'
-    ]
+// Convert to context later
+const nameArray = [];
 
-    return names[Math.floor(Math.random()*20)];
+while(nameArray.length < 5){
+    const num = setRandNum(19);
+    if(nameArray.length === 0 || !nameArray.includes(num)){
+        nameArray.push(num);
+    }
 }
 
-const CPU = (currentDice) => {
+
+const CPU = (currentDice, num) => {
     const [dice, setDice] = useState();
     const [name, setName] = useState();
     const [numDice, setNumDice] = useState(currentDice);
     const [roll, setRoll] = useState(false);
+    
+    const pickName = () => {
+        const names = [
+            "Wylie 'The Blue Fox' Yelland",
+            "Errol 'Jolly Roger' Seamen",
+            "Jake 'Salty Dog' Ninnies",
+            "Gordon 'Shiny Buckles' Horn",
+            "Nelson 'Gold Fiend' Docherty",
+            "Samuel 'Tall Story' Scott",
+            "Jacob 'Sly Dog' Craggs",
+            "Tobias 'Saucy Devil' Dogg",
+            "Samson 'Bonny Baby' Pigg",
+            "Wade 'Loud Limey' Locke",
+            'Esme "One-Eyed" Goodwin',
+            'Gail "Silver Tooth" Yelland',
+            'Bella "Ugly Mug" Vague',
+            'Pearl "Black Beard" Shakes',
+            'Peggy "Red Locks" Ripper',
+            `Stella "Rum Drunk" Rugged`,
+            'Harriet "Black Beard" Raw',
+            'Pearl "Rum Drunk" Raw',
+            'Lil "Coconut Crazy" Locke',
+            'Carrie "Dead Man" Brown'
+        ]
+    
+        return names[num];
+    }
 
     useEffect(()=>{
         setDice(()=>{
             const nums = [];
-            for(let i=0; i<numDice; i++) nums.push(setRandNum())
+            for(let i=0; i<numDice; i++) nums.push(setRandNum(numDice))
             return nums;
         })
     },[roll])
@@ -47,7 +58,7 @@ const CPU = (currentDice) => {
         setName(pickName());
     },[])
 
-    return [dice, name, roll, setDice, setNumDice, setRoll];
+    return [dice, numDice, name, roll, setDice, setNumDice, setRoll];
 }
 
 export const useDice = (currentDice, cpu) => {
@@ -56,16 +67,17 @@ export const useDice = (currentDice, cpu) => {
     const [roll, setRoll] = useState();
     const [cpuPlayers, setCpuPlayers] = useState(cpu);
     const [allPlayersDice, setAllPlayersDice] = useState();
-    const [CPU1, CPU1Name, CPU1Roll, CPU1SetDice, CPU1SetRoll] = CPU(numDice);
-    const [CPU2, CPU2Name, CPU2Roll, CPU2SetDice, CPU2SetRoll] = CPU(numDice);
-    const [CPU3, CPU3Name, CPU3Roll, CPU3SetDice, CPU3SetRoll] = CPU(numDice);
-    const [CPU4, CPU4Name, CPU4Roll, CPU4SetDice, CPU4SetRoll] = CPU(numDice);
-    const [CPU5, CPU5Name, CPU5Roll, CPU5SetDice, CPU5SetRoll] = CPU(numDice);
+    const [CPUArray, setCPUArray] = useState();
+    const [CPU1, CPU1Dice, CPU1Name, CPU1Roll, CPU1SetDice, CPU1SetRoll] = CPU(numDice, 0);
+    const [CPU2, CPU2Dice, CPU2Name, CPU2Roll, CPU2SetDice, CPU2SetRoll] = CPU(numDice, 1);
+    const [CPU3, CPU3Dice, CPU3Name, CPU3Roll, CPU3SetDice, CPU3SetRoll] = CPU(numDice, 2);
+    const [CPU4, CPU4Dice, CPU4Name, CPU4Roll, CPU4SetDice, CPU4SetRoll] = CPU(numDice, 3);
+    const [CPU5, CPU5Dice, CPU5Name, CPU5Roll, CPU5SetDice, CPU5SetRoll] = CPU(numDice, 4);
     
     useEffect(()=>{
         setDice(()=>{
             const nums =[];
-            for(let i=0; i<numDice; i++) nums.push(setRandNum())
+            for(let i=0; i<numDice; i++) nums.push(setRandNum(numDice))
             return nums;
         });
         CPU1SetRoll(!CPU1Roll);
@@ -73,9 +85,6 @@ export const useDice = (currentDice, cpu) => {
         CPU3SetRoll(!CPU3Roll);
         CPU4SetRoll(!CPU4Roll);
         CPU5SetRoll(!CPU5Roll);
-    },[roll])
-
-    useEffect(()=>{
         setAllPlayersDice(()=>{
             switch(cpuPlayers){
                 case 2: return {player: dice, CPU1: CPU1, CPU2: CPU2};
@@ -84,7 +93,10 @@ export const useDice = (currentDice, cpu) => {
                 case 5: return {player: dice, CPU1: CPU1, CPU2: CPU2, CPU3: CPU3, CPU4: CPU4, CPU5: CPU5};
             }
         });
-    },[dice, CPU1, CPU2, CPU3, CPU4, CPU5])
+        setCPUArray(()=>{
+
+        })
+    },[roll])
 
     return {dice, roll, setDice, setRoll, setNumDice, setCpuPlayers, CPU1Name, CPU2Name, CPU3Name, CPU4Name, CPU5Name, CPU1, CPU2, CPU3, CPU4, CPU5, allPlayersDice};
 }
