@@ -44,3 +44,10 @@ label {
     color: #eee;
     text-shadow: red 1px .5px;
 }
+
+.border {
+    border-top: #eee 3px solid;
+    border-bottom: #eee 3px solid;
+    padding: 5px 0;
+    background-color: rgba(#555,.3);
+}
