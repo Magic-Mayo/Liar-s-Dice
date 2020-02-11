@@ -34,7 +34,7 @@ const App = () => {
                     <Dice number={5}/>
                     <Dice number={6}/>
                 </div>
-                <Link to='/instruction' className='instructions'>
+                <Link to='/instruction' className='instructions-button'>
                     <button>How to Play</button>
                 </Link>
                 <Link to='/game' className='start'>
