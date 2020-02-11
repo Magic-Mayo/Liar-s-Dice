@@ -11,11 +11,17 @@ const Choice = props => {
     }
 
     return (
-        <div className='game-choice'>
+        <div className='game-choice' style={props.instruction ? {position: 'relative'} : {}}>
             <form onSubmit={userMakeBet}>
                 <label htmlFor='number'>
-                    {error ?
-                        'Your bet needs to be higher!' : 'Make your selection:'}</label>
+                    {props.instruction ?
+                        'Make your selection:'
+                    : error ?
+                        'Your bet needs to be higher!'
+                    :
+                        'Make your selection:'
+                    }
+                </label>
                 <span
                 className='game-bet'
                 name='number'
@@ -36,7 +42,7 @@ const Choice = props => {
                 </div>
                 <button type='button' className='game-bet-btn' onClick={userMakeBet}>Choose</button>
                 {props.lastNum > 1 &&
-                    <button type='button' className='game-call-btn' onClick={()=>props.callBet(props.turn, props.players)}>Call Last Bet</button>
+                    <button type='button' className='game-call-btn' onClick={!props.instruction ? ()=>props.callBet(props.turn, props.players) : null}>Call Last Bet</button>
                 }
             </form>
             
