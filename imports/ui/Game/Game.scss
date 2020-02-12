@@ -166,4 +166,27 @@
         left: 50%;
         transform: translateX(-60%);
     }
+
+    &-arrow {
+        &-left {
+            position: absolute;
+            color: red;
+            top: 43.5vh;
+            right: 36vw;
+            
+            span {
+                height: 70px;
+                border: solid #aaa;
+                border-top: 4px;
+                position: absolute;
+                transform: rotate(45deg);
+                top: -7px;
+                right: 15.5px;
+            }
+        }
+
+        &-right {
+
+        }
+    }
 }
