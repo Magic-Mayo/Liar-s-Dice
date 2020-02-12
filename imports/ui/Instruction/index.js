@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import Choice from '../Game/Choice';
+import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+
+
 
 const Instruction = () => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(3);
 
     return (
         <section className='instructions'>
@@ -32,18 +36,36 @@ const Instruction = () => {
                         After setting the game parameters, you will then begin by clicking the button to roll the dice.  After rolling, you will see what you rolled and also see your options for selecting your bet that will look like below.
                     </p>
                     <div className='border'>
-                        <Choice
-                        numChoice={1}
-                        instruction={true}
-                        />
                     </div>
                 </>
-            :
+            : page === 3 ?
                 <>
-
+                    <p>
+                        These buttons are how you increase and decrease the amount of dice you want to bet.
+                    </p>
+                    <Icon
+                    icon={faArrowLeft}
+                    size='2x'
+                    className='instructions-arrow-left'
+                    />
                 </>
-            }
+            : page === 4 ?
+                <>
                 
+                </>
+            : page === 5 ?
+                <>
+                
+                </>
+            :
+            null
+            }
+            
+            <Choice
+            numChoice={1}
+            instruction={true}
+            />
+
             <button className='instructions-next' type='button' onClick={()=>setPage(page+1)}>Next Page</button>
         </section>
     )
