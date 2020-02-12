@@ -5,7 +5,8 @@ import Game from './Game';
 import Header from './Header';
 import Dice from './Dice';
 import Settings from './Settings';
-import Icon from './Icon'
+import Icon from './Icon';
+
 const songOne = new Audio('/game.mp3');
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
     const [sound, setSound] = useState(false);
     const [music, setMusic] = useState(false);
     
-    useEffect(()=>{        
+    useEffect(()=>{
         if(music){
             songOne.loop = true;
             songOne.play();
