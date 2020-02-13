@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import Choice from '../Game/Choice';
 
 const Instruction = () => {
-    const [page, setPage] = useState(3);
+    const [page, setPage] = useState(1);
 
     let history = useHistory();
 
