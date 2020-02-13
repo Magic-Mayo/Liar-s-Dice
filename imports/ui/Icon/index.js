@@ -9,7 +9,8 @@ const Icon = props => {
             src='/wheel.PNG'
             alt='settings'
             className='settings-icon'
-            onClick={()=>props.setSettings(true)}></img>
+            >
+            </img>
         }
         </>
     )
