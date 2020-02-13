@@ -1,6 +1,9 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 
 const Settings = props => {
+    let history = useHistory();
+
     return (
         <div className='settings-modal'>
             <fieldset className='settings-audio'>
@@ -15,7 +18,7 @@ const Settings = props => {
                     <span className='slider round'></span>
                 </label>
             </fieldset>
-            <button className='btn-close' onClick={()=>props.setSettings(false)}>Close</button>
+            <button className='btn-close' onClick={history.goBack}>Close</button>
         </div>
     )
 }
