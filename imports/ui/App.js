@@ -27,46 +27,48 @@ const App = () => {
     return (
         <Router>
             <Header />
-            <Route exact path='/'>
-                <div className='splash'>
-                    <Dice number={2}/>
-                    <Dice number={3}/>
-                    <Dice number={4}/>
-                    <Dice number={5}/>
-                    <Dice number={6}/>
-                </div>
-                <Link to='/instruction' className='instructions-button'>
-                    <button>How to Play</button>
-                </Link>
-                <Link to='/game' className='start'>
-                    <button>Play!</button>
-                </Link>
-            </Route>
-            <Route exact path='/settings'>
-                <Settings
-                setSettings={setSettings}
-                setSound={setSound}
-                setMusic={setMusic}
-                sound={sound}
-                music={music}
-                />
-            </Route>
-            <Switch>
-                <Route exact path='/instruction'>
-                    <Instruction />
+            <div className='container'>
+                <Route exact path='/'>
+                    <div className='splash'>
+                        <Dice number={2}/>
+                        <Dice number={3}/>
+                        <Dice number={4}/>
+                        <Dice number={5}/>
+                        <Dice number={6}/>
+                    </div>
+                    <Link to='/instruction' className='instructions-button'>
+                        <button>How to Play</button>
+                    </Link>
+                    <Link to='/game' className='start'>
+                        <button>Play!</button>
+                    </Link>
                 </Route>
-                <Route path='/game'>
-                    <Game
+                <Route exact path='/settings'>
+                    <Settings
+                    setSettings={setSettings}
+                    setSound={setSound}
+                    setMusic={setMusic}
                     sound={sound}
-                    music={music} />
+                    music={music}
+                    />
                 </Route>
-            </Switch>
-            <Link to='/settings'>
-                <Icon
-                icon='settings'
-                settings={settings}
-                setSettings={setSettings} />
-            </Link>
+                <Switch>
+                    <Route exact path='/instruction'>
+                        <Instruction />
+                    </Route>
+                    <Route path='/game'>
+                        <Game
+                        sound={sound}
+                        music={music} />
+                    </Route>
+                </Switch>
+                <Link to='/settings'>
+                    <Icon
+                    icon='settings'
+                    settings={settings}
+                    setSettings={setSettings} />
+                </Link>
+            </div>
         </Router>
     );
 }
