@@ -42,7 +42,7 @@ const App = () => {
                     <button>Play!</button>
                 </Link>
             </Route>
-            {settings && 
+            <Route exact path='/settings'>
                 <Settings
                 setSettings={setSettings}
                 setSound={setSound}
@@ -50,7 +50,7 @@ const App = () => {
                 sound={sound}
                 music={music}
                 />
-            }
+            </Route>
             <Switch>
                 <Route exact path='/instruction'>
                     <Instruction />
@@ -61,10 +61,12 @@ const App = () => {
                     music={music} />
                 </Route>
             </Switch>
-            <Icon
-            icon='settings'
-            settings={settings}
-            setSettings={setSettings} />
+            <Link to='/settings'>
+                <Icon
+                icon='settings'
+                settings={settings}
+                setSettings={setSettings} />
+            </Link>
         </Router>
     );
 }
