@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import Choice from '../Game/Choice';
-import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-
-
 
 const Instruction = () => {
     const [page, setPage] = useState(3);
 
+    let history = useHistory();
+
     return (
         <section className='instructions'>
-            {page < 2 ?
-                <Link to='/' className='instructions-menu'>
-                    &lt;
-                </Link>
-            :
-                <span className='instructions-menu' onClick={()=>setPage(page-1)}>&lt;</span>
-            }
+            <span className='instructions-menu' onClick={page > 1 ? ()=>setPage(page-1) : history.goBack}>&lt;</span>
+            
             {page === 1 ?
                 <>
 
@@ -35,22 +28,19 @@ const Instruction = () => {
                     <p>
                         After setting the game parameters, you will then begin by clicking the button to roll the dice.  After rolling, you will see what you rolled and also see your options for selecting your bet that will look like below.
                     </p>
-                    <div className='border'>
-                    </div>
                 </>
             : page === 3 ?
                 <>
                     <p>
                         These buttons are how you increase and decrease the amount of dice you want to bet.
                     </p>
-                    <Icon
-                    icon={faArrowLeft}
-                    size='2x'
-                    className='instructions-arrow-left'
-                    />
                 </>
             : page === 4 ?
                 <>
+                    <p>
+                        Clicking on one of the dice below that selects the die you want to bet.  So if you set the number to <span>4</span> and select the die with 
+                        the number <span>3</span> you are betting <span>four 3's</span>
+                    </p>
                 
                 </>
             : page === 5 ?
@@ -60,13 +50,21 @@ const Instruction = () => {
             :
             null
             }
-            
-            <Choice
-            numChoice={1}
-            instruction={true}
-            />
+            {page > 1 &&
+                <Choice
+                page={page}
+                numChoice={1}
+                instruction={true}
+                />
+            }
 
-            <button className='instructions-next' type='button' onClick={()=>setPage(page+1)}>Next Page</button>
+            <button
+            className='instructions-next'
+            type='button'
+            onClick={page < 5 ? ()=>setPage(page+1) : page === 5 ? history.goBack : null}
+            >
+                {page < 5 ? 'Next Page' : 'Main Menu'}
+            </button>
         </section>
     )
 }
