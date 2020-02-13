@@ -40,7 +40,6 @@ body {
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 75vw;
-    margin-top: 5vh;
 }
 
 @media only screen and (max-width: 650px){
@@ -49,4 +48,8 @@ body {
         background-size: auto;
         background-position: top;
     }
+}
+
+.container {
+    padding-top: 4vh;
 }
