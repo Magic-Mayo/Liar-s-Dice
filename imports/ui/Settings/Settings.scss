@@ -1,4 +1,8 @@
 .settings {
+    &-audio {
+        width: 100%;
+    }
+
     &-modal {
         position: fixed;
         box-shadow: #222 10px 10px 15px;
@@ -6,11 +10,14 @@
         padding: 30px;
         width: 75vw;
         height: 50vh;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: $blueSky;
+        top: 20%;
+        left: 13%;
+        background-color: #3aa6ff;
         z-index: 100;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
         .switch {
             position: relative;
@@ -67,6 +74,7 @@
 
         input[type='checkbox'] {
             -webkit-appearance: none;
+            display: none;
         }
         
         /* Rounded sliders */
@@ -79,10 +87,6 @@
         }
         
         .btn-close {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 100px;
         }
         
