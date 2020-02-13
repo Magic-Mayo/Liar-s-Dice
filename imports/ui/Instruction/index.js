@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import Choice from '../Game/Choice';
 
 const Instruction = () => {
-    const [page, setPage] = useState(3);
+    const [page, setPage] = useState(5);
 
     let history = useHistory();
 
@@ -45,12 +45,16 @@ const Instruction = () => {
                 </>
             : page === 5 ?
                 <>
-                
+                    <p>
+                        After you make your bet there will be a round of betting for the remaining players.  If the betting comes back around to you with none of the other players calling then you have the option to make another bet that exceeds the 
+                        previous one or you can call the last bet made.  If you call the last bet and are successful, less dice of the number bet than what everyone has in their hand, that player will lose one of their dice.  An unsuccessful bet means 
+                        you lose one of your dice!
+                    </p>
                 </>
             :
             null
             }
-            {page > 1 &&
+            {page > 1 && page < 5 &&
                 <Choice
                 page={page}
                 numChoice={1}
