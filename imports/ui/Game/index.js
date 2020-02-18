@@ -77,14 +77,6 @@ const Game = props => {
         return (
             <>
                 <span>{playerCalling} called {playerCalled}!  Show your hand!  {playerCalled} bet {lastNum} {lastDie}'s.  There {bet > 1 ? 'are' : 'is'} {bet} {lastDie}{bet > 1 ? "'s" : ""}!  {bet >= lastNum ? playerCalling : playerCalled} loses!</span>
-                <button type='button'
-                onClick={()=>{
-                    setRoll(false);
-                    setPlayerCalls(false);
-                    setLastDie(0);
-                    setLastNum(0);
-                    setUserDieChoice(true)
-                    setNumChoice(1)}}>Next Round!</button>
             </>
         )
     }
@@ -176,9 +168,23 @@ const Game = props => {
                                 }
                                 {" "}bets {}
                             </span>
-                            <button type='button' onClick={cpuBetOrCall}>Next</button>
+                            <button
+                            type='button'
+                            onClick={
+                                playerCalls ? ()=>{
+                                    setRoll(false);
+                                    setPlayerCalls(false);
+                                    setLastDie(0);
+                                    setLastNum(0);
+                                    setUserDieChoice(true)
+                                    setNumChoice(1)}
+                            :
+                                cpuBetOrCall
+                            }>
+                                Next
+                            </button>
                         </div>
-                }
+                    }
                     {playerCalls && 
                         <div className='game-bet-called'>
                             <span>
