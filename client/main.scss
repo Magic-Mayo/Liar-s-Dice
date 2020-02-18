@@ -52,4 +52,8 @@ body {
 
 .container {
     padding-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
