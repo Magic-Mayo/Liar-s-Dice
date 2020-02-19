@@ -94,7 +94,9 @@ const Choice = props => {
                         pip={2}/>
                     ))}
                 </div>
-                <button type='button' className='game-bet-btn' onClick={userMakeBet}>Choose</button>
+                {props.userDieChoice !== true &&
+                    <button type='button' className='game-bet-btn' onClick={userMakeBet}>Choose</button>
+                }
                 {props.lastNum > 1 &&
                     <button type='button' className='game-call-btn' onClick={!props.instruction ? ()=>props.callBet(props.turn, props.players) : null}>Call Last Bet</button>
                 }
