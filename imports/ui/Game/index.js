@@ -44,7 +44,7 @@ const Game = props => {
         if(sound){
             const diceSound = new Audio('/dicehand.m4a');
             diceSound.play();
-            return setTimeout(()=>setRollg(true),2325);
+            return setTimeout(()=>setRoll(true),2325);
         }
         setRoll(true);
     }
@@ -59,7 +59,7 @@ const Game = props => {
         allDice.forEach(val=>{
             if(val === lastDie) setBet(bet + 1);
         });
-
+        console.log(playerBetting, playerCalling)
     }
 
     const whoCalled = () => {
@@ -84,6 +84,8 @@ const Game = props => {
     const cpuBetOrCall = () => {
         let CPU;
         let highest = 0;
+        const theOdds = odds();
+
         const num = {
             1: 0,
             2: 0,
@@ -112,9 +114,30 @@ const Game = props => {
             if(num[key] > highest) highest = key
         }
 
-        if(lastNum > totalDice*.75) return callBet(turn, turn-1);
-        if(lastNum > totalDice*.65 && odds() > 10) return callBet(turn, turn-1);
-        // if(lastNum )
+        console.log(`CPU${turn}`)
+        console.log(highest)
+        console.log(lastDie)
+        console.log(theOdds)
+        console.log(totalDice*.75)
+        if(lastNum > totalDice*.75 && odds() < 6) return callBet(turn, turn-1);
+        else if(lastNum > totalDice*.65 && odds() < 11) return callBet(turn, turn-1);
+        else if(lastNum > totalDice*.5 && odds() < 26) return callBet(turn, turn-1);
+        else if(lastNum > totalDice*.4 && odds() < 51) return callBet(turn, turn-1);
+        else if(lastNum > totalDice*.25 && odds() < 91) return callBet(turn, turn-1);
+
+        if(lastDie === highest && num[highest] > lastNum) {
+            console.log('equal')
+            return setLastNum(prevState=>{
+            const theOdds = odds();
+            if(num[highest] - lastNum > 0 && num[highest] - lastNum < 3 && theOdds < 75) return prevState + 1;
+            else if(num[highest] - lastNum > 0 && num[highest] - lastNum < 3 && theOdds > 75) return prevState + 2;
+            if(num[highest] - lastNum > 2 && num[highest] - lastNum < 4 && theOdds < 60) return prevState + 2;
+            else if(num[highest] - lastNum > 2 && num[highest] - lastNum < 4 && theOdds > 60) return prevState + 3;
+            return prevState + 4;
+            
+        })}
+        
+        
 
         // allPlayersDice[`CPU${turn}`].map(val=>{
         //     num[val] = num[val]++
@@ -136,6 +159,11 @@ const Game = props => {
                                 pip={currentDice < 9 ? 0 : 1}
                                 />
                         ))}
+                    {playerCalls && 
+                        <div className='game-bet-called'>
+                            {whoCalled()}
+                        </div>
+                    }
                     </div>
                     {!roll &&
                         <button type='button' className='roll-dice' onClick={() => rollDice(props.sound)}>Roll the Dice!</button>
@@ -183,13 +211,6 @@ const Game = props => {
                             }>
                                 Next
                             </button>
-                        </div>
-                    }
-                    {playerCalls && 
-                        <div className='game-bet-called'>
-                            <span>
-                                {whoCalled()}
-                            </span>
                         </div>
                     }
                 </>
