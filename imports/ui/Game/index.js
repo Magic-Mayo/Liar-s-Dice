@@ -20,8 +20,8 @@ const Game = props => {
     const [bet, setBet] = useState(0);
     const {
         dice,
-        roll,
         setDice,
+        roll,
         setRoll,
         setNumDice,
         setCpuPlayers,
@@ -55,11 +55,13 @@ const Game = props => {
         for(let key in allPlayersDice){
             allDice.push(...allPlayersDice[key]);
         }
-
-        allDice.forEach(val=>{
-            if(val === lastDie) setBet(bet + 1);
-        });
-        console.log(playerBetting, playerCalling)
+        setBet(()=>{
+            let bet = 0;
+            allDice.map(val=>{
+                if(val === lastDie) bet++;
+            });
+            return bet;
+        })
     }
 
     const whoCalled = () => {
@@ -76,7 +78,7 @@ const Game = props => {
 
         return (
             <>
-                <span>{playerCalling} called {playerCalled}!  Show your hand!  {playerCalled} bet {lastNum} {lastDie}'s.  There {bet > 1 ? 'are' : 'is'} {bet} {lastDie}{bet > 1 ? "'s" : ""}!  {bet >= lastNum ? playerCalling : playerCalled} loses!</span>
+                <span>{playerCalling} called {playerCalled}!  Show your hand!  {playerCalled} bet {lastNum} {lastDie}'s.  There {bet > 1 ? 'are' : 'is'} {bet} {lastDie}{bet > 1 ? "'s" : ""}!  {bet >= lastNum ? playerCalling : playerCalled} {playerCalled === 'You' || playerCalling === 'You' ? 'lost' : 'loses'} a die!</span>
             </>
         )
     }
@@ -103,22 +105,12 @@ const Game = props => {
             case 4: CPU = CPU5; break;
         }
         
-        setTurn(()=>{
-            if(turn === players) return 0;
-            return turn+1;
-        });
-
         CPU.map(val => num[val] = num[val] + 1);
 
         for(let key in num){
             if(num[key] > highest) highest = key
         }
 
-        console.log(`CPU${turn}`)
-        console.log(highest)
-        console.log(lastDie)
-        console.log(theOdds)
-        console.log(totalDice*.75)
         if(lastNum > totalDice*.75 && odds() < 6) return callBet(turn, turn-1);
         else if(lastNum > totalDice*.65 && odds() < 11) return callBet(turn, turn-1);
         else if(lastNum > totalDice*.5 && odds() < 26) return callBet(turn, turn-1);
@@ -137,7 +129,10 @@ const Game = props => {
             
         })}
         
-        
+        setTurn(()=>{
+            if(turn === players) return 0;
+            return turn+1;
+        });
 
         // allPlayersDice[`CPU${turn}`].map(val=>{
         //     num[val] = num[val]++
@@ -205,7 +200,8 @@ const Game = props => {
                                     setLastDie(0);
                                     setLastNum(0);
                                     setUserDieChoice(true)
-                                    setNumChoice(1)}
+                                    setNumChoice(1)
+                                }
                             :
                                 cpuBetOrCall
                             }>
