@@ -1,8 +1,11 @@
 import {useState, useEffect} from 'react';
 
+// Send these hooks as context later
+// ----------------------------------------------
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
 const setRandNum = max => Math.floor(Math.random() * max) + 1;
 
-// Convert to context later
 const nameArray = [];
 
 while(nameArray.length < 5){
@@ -31,19 +34,19 @@ const CPU = (currentDice, num) => {
             "Tobias 'Saucy Devil' Dogg",
             "Samson 'Bonny Baby' Pigg",
             "Wade 'Loud Limey' Locke",
-            'Esme "One-Eyed" Goodwin',
-            'Gail "Silver Tooth" Yelland',
-            'Bella "Ugly Mug" Vague',
-            'Pearl "Black Beard" Shakes',
-            'Peggy "Red Locks" Ripper',
-            `Stella "Rum Drunk" Rugged`,
-            'Harriet "Black Beard" Raw',
-            'Pearl "Rum Drunk" Raw',
-            'Lil "Coconut Crazy" Locke',
-            'Carrie "Dead Man" Brown'
+            "Esme 'One-Eyed' Goodwin",
+            "Gail 'Silver Tooth' Yelland",
+            "Bella 'Ugly Mug' Vague",
+            "Pearl 'Black Beard' Shakes",
+            "Peggy 'Red Locks' Ripper",
+            "Stella 'Rum Drunk' Rugged",
+            "Harriet 'Black Beard' Raw",
+            "Pearl 'Rum Drunk' Essence",
+            "Lil 'Coconut Crazy' Locke",
+            "Carrie 'Dead Man' Brown"
         ]
     
-        return names[num];
+        return names[nameArray[num]];
     }
 
     useEffect(()=>{
@@ -64,15 +67,15 @@ const CPU = (currentDice, num) => {
 export const useDice = (currentDice, cpu) => {
     const [dice, setDice] = useState();
     const [numDice, setNumDice] = useState(currentDice)
-    const [roll, setRoll] = useState();
+    const [roll, setRoll] = useState(false);
     const [cpuPlayers, setCpuPlayers] = useState(cpu);
     const [allPlayersDice, setAllPlayersDice] = useState();
     const [CPUArray, setCPUArray] = useState();
-    const [CPU1, CPU1Dice, CPU1Name, CPU1Roll, CPU1SetDice, CPU1SetRoll] = CPU(numDice, 0);
-    const [CPU2, CPU2Dice, CPU2Name, CPU2Roll, CPU2SetDice, CPU2SetRoll] = CPU(numDice, 1);
-    const [CPU3, CPU3Dice, CPU3Name, CPU3Roll, CPU3SetDice, CPU3SetRoll] = CPU(numDice, 2);
-    const [CPU4, CPU4Dice, CPU4Name, CPU4Roll, CPU4SetDice, CPU4SetRoll] = CPU(numDice, 3);
-    const [CPU5, CPU5Dice, CPU5Name, CPU5Roll, CPU5SetDice, CPU5SetRoll] = CPU(numDice, 4);
+    const [CPU1, CPU1Dice, CPU1Name, CPU1Roll, CPU1SetDice, CPU1SetNumDice, CPU1SetRoll] = CPU(numDice, 0);
+    const [CPU2, CPU2Dice, CPU2Name, CPU2Roll, CPU2SetDice, CPU2SetNumDice, CPU2SetRoll] = CPU(numDice, 1);
+    const [CPU3, CPU3Dice, CPU3Name, CPU3Roll, CPU3SetDice, CPU3SetNumDice, CPU3SetRoll] = CPU(numDice, 2);
+    const [CPU4, CPU4Dice, CPU4Name, CPU4Roll, CPU4SetDice, CPU4SetNumDice, CPU4SetRoll] = CPU(numDice, 3);
+    const [CPU5, CPU5Dice, CPU5Name, CPU5Roll, CPU5SetDice, CPU5SetNumDice, CPU5SetRoll] = CPU(numDice, 4);
     
     useEffect(()=>{
         setDice(()=>{
@@ -100,5 +103,9 @@ export const useDice = (currentDice, cpu) => {
 
     return {dice, roll, setDice, setRoll, setNumDice, setCpuPlayers, CPU1Name, CPU2Name, CPU3Name, CPU4Name, CPU5Name, CPU1, CPU2, CPU3, CPU4, CPU5, allPlayersDice};
 }
+
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// ----------------------------------------------------------------------------------
+// Send as context
 
 export default useDice;
