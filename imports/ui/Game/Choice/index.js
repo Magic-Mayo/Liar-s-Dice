@@ -2,51 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Dice from '../../Dice';
 import {FontAwesomeIcon as FAIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {useTimer} from '../../../hooks';
 
 const Choice = props => {
     const [error, setError] = useState(false);
-    const [instructionNum, setInstructionNum] = useState(1);
-    const [arrow, setArrow] = useState('left');
-    const [instructionDie, setInstructionDie] = useState();
-    
-    
+    const [arrow, instructionDie, instructionNum, setPage] = useTimer(props.page);
+
     const userMakeBet = () => {
         props.setLastDie(props.userDieChoice);
         props.setLastNum(props.numChoice);
         props.cpuBetOrCall();
     }
-    
+
     useEffect(()=>{
-        const timer = (fn, time, val, state) => {
-            setTimeout(()=>{
-                if(state === 'plus') fn(prevState=>prevState+1);
-                else if(state === 'minus') fn(prevState=>prevState-1);
-                else fn(val)
-            }, time)
-        }
-
-        if(props.page === 3){
-            timer(setInstructionNum, 1500, instructionNum, 'plus');
-            timer(setInstructionNum, 2000, instructionNum, 'plus');
-            timer(setArrow, 2750, 'right');
-            timer(setInstructionNum, 3500, instructionNum, 'minus');
-            timer(setInstructionNum, 4000, instructionNum, 'minus');
-        } else if(props.page === 4){
-            timer(setArrow, 4750, 'dice');
-            timer(setInstructionDie, 1500, 1);
-            timer(setInstructionDie, 2000, instructionDie, 'plus');
-            timer(setInstructionDie, 2500, instructionDie, 'plus');
-            timer(setInstructionDie, 3000, instructionDie, 'plus');
-            timer(setInstructionDie, 3500, instructionDie, 'plus');
-            timer(setInstructionDie, 4000, instructionDie, 'plus');
-        }
-
-        return ()=>{
-            clearTimeout(timer);
-            setArrow('left');
-            setInstructionDie();
-            setInstructionNum(1);
-        }
+        setPage(props.page);
     },[props.page])
 
     return (
@@ -59,7 +28,7 @@ const Choice = props => {
                 />
             }
 
-            <form onSubmit={userMakeBet}>
+            <form>
                 <label htmlFor='number'>
                     {props.instruction ?
                         'Make your selection:'
