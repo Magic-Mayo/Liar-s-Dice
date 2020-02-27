@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useDice from '../../hooks';
+import {useDice} from '../../hooks';
 import Dice from '../Dice';
 import Parameters from '../Parameters';
 import Choice from './Choice';
@@ -14,7 +14,7 @@ const Game = props => {
     const [lastNum, setLastNum] = useState(0);
     const [lastDie, setLastDie] = useState(0);
     const [userDieChoice, setUserDieChoice] = useState(true);
-    const [totalDice, setTotalDice] = useState(players*currentDice);
+    const [totalDice, setTotalDice] = useState((players + 1)*currentDice);
     const [playerCalls, setPlayerCalls] = useState(false);
     const [turn, setTurn] = useState(0);
     const [bet, setBet] = useState(0);
@@ -61,7 +61,7 @@ const Game = props => {
                 if(val === lastDie) bet++;
             });
             return bet;
-        })
+        });
     }
 
     const whoCalled = () => {
@@ -84,6 +84,7 @@ const Game = props => {
     }
     
     const cpuBetOrCall = () => {
+        if(turn === players || playerCalls) return setTurn(0);
         let CPU;
         let highest = 0;
         const theOdds = odds();
@@ -104,7 +105,7 @@ const Game = props => {
             case 3: CPU = CPU4; break;
             case 4: CPU = CPU5; break;
         }
-        
+
         CPU.map(val => num[val] = num[val] + 1);
 
         for(let key in num){
@@ -129,16 +130,17 @@ const Game = props => {
             
         })}
         
-        setTurn(()=>{
-            if(turn === players) return 0;
-            return turn+1;
-        });
+        setTurn(turn+1);
 
         // allPlayersDice[`CPU${turn}`].map(val=>{
         //     num[val] = num[val]++
         // })
 
     }
+
+    useEffect(()=>{
+        setTotalDice((players + 1) * currentDice)
+    }, [players])
     
     return (
         <>
@@ -191,22 +193,23 @@ const Game = props => {
                                 }
                                 {" "}bets {}
                             </span>
-                            <button
-                            type='button'
-                            onClick={
-                                playerCalls ? ()=>{
+                            {!playerCalls ?
+                                <button
+                                type='button'
+                                onClick={cpuBetOrCall}>
+                                    Next
+                                </button>
+                            :
+                                <button
+                                onClick={()=>{
                                     setRoll(false);
                                     setPlayerCalls(false);
                                     setLastDie(0);
                                     setLastNum(0);
-                                    setUserDieChoice(true)
-                                    setNumChoice(1)
-                                }
-                            :
-                                cpuBetOrCall
-                            }>
-                                Next
-                            </button>
+                                    setUserDieChoice(true);
+                                    setNumChoice(1);
+                                }}>Continue</button>
+                            }
                         </div>
                     }
                 </>
